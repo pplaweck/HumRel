@@ -1,0 +1,88 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="/mainpage">HumRel</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="/mainpage/my_profile">Profil</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/mainpage/friends">Friends</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/mainpage/notifications">Notifications
+        {{#if notifications}}
+            <b> {{notifications}}</b>
+        {{/if}}
+        </a>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Settings
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item disabled" href="#">Layout</a>
+          <a class="dropdown-item disabled" href="#">Theme</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="#">Profil</a>
+        </div>
+      </li>
+    </ul>
+
+    <form method="POST" action="/logout">
+        <div>
+            <button type="submit" class="btn btn-primary">Logout</button>
+        </div>
+    </form>
+  </div>
+</nav>
+
+
+<br>
+        {{#if message}}
+            <div class="alert {{messageClass}}" role="alert">
+                {{message}}
+            </div>
+        {{/if}}
+<br>
+<div>
+
+
+    <form method="POST" action="/mainpage/search">
+        <div class="md-form mt-0">
+            <input name="search_string" class="form-control" type="text" placeholder="Search friends" aria-label="Search">
+        </div>
+        <div>
+            <br>
+            <button type="submit" class="btn btn-primary">Search</button>
+        </div>
+    </form>
+    <br>
+    <br>
+    {{#if invites}}
+    <div>
+        <ul>
+        {{#each invites}}
+        <li class="list-group-item" >{{this.name}} {{this.lastname}} invites you to firends
+            <form   style="display:inline;" method="POST" action="/mainpage/accept_invite" >
+            <button  type="submit " class="btn btn-success btn-small" >Accept</button>
+            <input type = "hidden" name = "id" value = "{{this.id}}" />
+            <input type = "hidden" name = "invites" value = "{{invites}}" />
+            <input type = "hidden" name = "type" value = "accept" />
+        </form>
+          <form   style="display:inline;" method="POST" action="/mainpage/accept_invite" >
+            <button  type="submit " class="btn btn-danger btn-small" >Not Accept</button>
+            <input type = "hidden" name = "id" value = "{{this.id}}" />
+            <input type = "hidden" name = "type" value = "reject" />
+            <input type = "hidden" name = "invites" value = "{{invites}}" />
+        </form>
+        </li>
+        {{/each}}
+        </ul>
+    </div>
+    {{/if}}
+
+</div>
